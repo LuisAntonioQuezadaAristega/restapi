@@ -84,21 +84,59 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Items"
+        ],
+        "summary": "Update an item",
+        "description": "Update an item",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Item ID"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Data to update the item",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "object"
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "New item description"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Item updated"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad request"
           }
         }
       },

@@ -82,8 +82,39 @@ exports.getItem = async (req, res) => {
 
 };
 
-exports.updateItem = async (req, res) => {
 
+exports.updateItem = async (req, res) => {
+    /* 
+     #swagger.tags = ['Items']
+     #swagger.description = 'Update an item'
+     #swagger.summary = 'Update an item'
+     #swagger.parameters['id'] = {
+         in: 'path',
+         description: 'Item ID',
+         required: true,
+         type: 'string'
+     }
+     #swagger.parameters['data'] = {
+         in: 'body',
+         description: 'Data to update the item',
+         required: true,
+         schema: {
+             type: 'object',
+             properties: {
+                 description: {
+                     type: 'string',
+                     example: 'New item description'
+                 }
+             }
+         }
+     }
+     #swagger.responses[200] = {
+         description: 'Item updated'
+     }
+     #swagger.responses[400] = {
+         description: 'Bad request'
+     }
+   */
     try {
         const itemId = req.params.id;
         const data = req.body;
@@ -93,10 +124,25 @@ exports.updateItem = async (req, res) => {
     } catch (error) {
         res.status(400).send(error.message);
     }
-
 };
 
 exports.deleteItem = async (req, res) => {
+    /* 
+         #swagger.tags = ['Items']
+         #swagger.description = ''
+         #swagger.summary = ''
+         #swagger.parameters['id'] = {
+             description: '',
+             required: true,
+         }
+
+         #swagger.responses[200] = {
+             description: '',
+         }
+         #swagger.responses[400] = {
+             description: '',
+         }
+       */
 
     try {
         const itemId = req.params.id;
