@@ -28,6 +28,13 @@
               "type": "object",
               "properties": {}
             }
+          },
+          {
+            "name": "Token",
+            "in": "header",
+            "description": "JWT token",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -36,6 +43,9 @@
           },
           "400": {
             "description": "Bad request"
+          },
+          "408": {
+            "description": "Request Timeout"
           }
         }
       },
@@ -45,12 +55,24 @@
         ],
         "summary": "Get all items entries",
         "description": "Get all items entries",
+        "parameters": [
+          {
+            "name": "Token",
+            "in": "header",
+            "description": "JWT token",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Items entries successfully obtained"
           },
           "400": {
             "description": "Bad request"
+          },
+          "408": {
+            "description": "Request Timeout"
           }
         }
       }
@@ -69,6 +91,13 @@
             "required": true,
             "type": "string",
             "description": "Item id"
+          },
+          {
+            "name": "Token",
+            "in": "header",
+            "description": "JWT token",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -80,6 +109,9 @@
           },
           "404": {
             "description": "Item not found"
+          },
+          "408": {
+            "description": "Request Timeout"
           }
         }
       },
@@ -129,6 +161,13 @@
                 }
               }
             }
+          },
+          {
+            "name": "Token",
+            "in": "header",
+            "description": "JWT token",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -137,6 +176,9 @@
           },
           "400": {
             "description": "Bad request"
+          },
+          "408": {
+            "description": "Request Timeout"
           }
         }
       },
@@ -153,7 +195,15 @@
             "required": true,
             "type": "string",
             "description": ""
+          },
+          {
+            "name": "Token",
+            "in": "header",
+            "description": "JWT token",
+            "required": true,
+            "type": "string"
           }
+
         ],
         "responses": {
           "200": {
@@ -161,6 +211,8 @@
           },
           "400": {
             "description": "Bad Request"
+          },"408": {
+            "description": "Request Timeout"
           }
         }
       }
