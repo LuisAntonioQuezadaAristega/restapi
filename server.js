@@ -10,7 +10,7 @@ const swaggerUi = require('swagger-ui-express')
 
  /* Referencia al archivo con la descripción */
 const swaggerFile = require('./swagger_output.json');
-const authMiddleware = require('./authMiddleware');
+const authMiddleware = require('./middleware/authMiddleware');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
