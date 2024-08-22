@@ -141,13 +141,18 @@
         }
       },
       "delete": {
+        "tags": [
+          "Items"
+        ],
+        "summary": "",
         "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": ""
           }
         ],
         "responses": {
