@@ -3,21 +3,33 @@ const db = admin.firestore();
 
 exports.createItem = async (req, res) => {
      /* 
-     #swagger.tags = ['Items']
-     #swagger.description = 'Create an item'
-     #swagger.summary = 'Create an item'
-     #swagger.parameters['data'] = {
-         in: 'body',
-         description: 'Data to create an item',
-         required: true,
-     }
-     #swagger.responses[201] = {
-         description: 'Item successfully created',
-     }
-     #swagger.responses[400] = {
-         description: 'Bad request',
-     }
-   */
+       #swagger.tags = ['Items']
+       #swagger.description = 'Create an item'
+       #swagger.summary = 'Create an item'
+       #swagger.parameters['data'] = {
+           in: 'body',
+           description: 'Data to create an item',
+           required: true,
+       }
+
+       #swagger.parameters['Token'] = {
+            name: 'Token',
+            in: 'header',
+            description: 'JWT token',
+            required: true
+       }
+
+       #swagger.responses[201] = {
+           description: 'Item successfully created',
+       }
+       #swagger.responses[400] = {
+           description: 'Bad request',
+       }
+
+       #swagger.responses[408] = {
+           description: 'Request Timeout',
+       }
+    */
   try {
     const data = req.body;
     const itemRef = await db.collection('items').add(data);
@@ -32,13 +44,23 @@ exports.getAllItems = async (req, res) => {
      #swagger.tags = ['Items']
      #swagger.description = 'Get all items entries'
      #swagger.summary = 'Get all items entries'
-     #swagger.responses[200] = {
-         description: 'Items entries successfully obtained',
-     }
-     #swagger.responses[400] = {
-         description: 'Bad request',
-     }
-   */
+     #swagger.parameters['Token'] = {
+         name: 'Token',
+         in: 'header',
+         description: 'JWT token',
+         required: true
+      }
+       #swagger.responses[200] = {
+           description: 'Items entries successfully obtained',
+       }
+       #swagger.responses[400] = {
+           description: 'Bad request',
+       }
+
+       #swagger.responses[408] = {
+           description: 'Request Timeout',
+       }
+    */
   try {
     const itemsSnapshot = await db.collection('items').get();
     const items = [];
@@ -51,6 +73,7 @@ exports.getAllItems = async (req, res) => {
 
 exports.getItem = async (req, res) => {
     /* 
+    /* 
      #swagger.tags = ['Items']
      #swagger.description = 'Get an item entry'
      #swagger.summary = 'Get an item entry'
@@ -58,6 +81,14 @@ exports.getItem = async (req, res) => {
          description: 'Item id',
          required: true,
      }
+         
+     #swagger.parameters['Token'] = {
+         name: 'Token',
+         in: 'header',
+         description: 'JWT token',
+         required: true
+     }
+
      #swagger.responses[404] = {
          description: 'Item not found',
      }
@@ -66,6 +97,10 @@ exports.getItem = async (req, res) => {
      }
      #swagger.responses[200] = {
          description: 'Get an item by id',
+     }
+
+     #swagger.responses[408] = {
+           description: 'Request Timeout',
      }
    */
     try {
@@ -84,37 +119,39 @@ exports.getItem = async (req, res) => {
 
 
 exports.updateItem = async (req, res) => {
-    /* 
-     #swagger.tags = ['Items']
-     #swagger.description = 'Update an item'
-     #swagger.summary = 'Update an item'
-     #swagger.parameters['id'] = {
-         in: 'path',
-         description: 'Item ID',
-         required: true,
-         type: 'string'
-     }
-     #swagger.parameters['data'] = {
-         in: 'body',
-         description: 'Data to update the item',
-         required: true,
-         schema: {
-             type: 'object',
-             properties: {
-                 description: {
-                     type: 'string',
-                     example: 'New item description'
-                 }
-             }
-         }
-     }
-     #swagger.responses[200] = {
-         description: 'Item updated'
-     }
-     #swagger.responses[400] = {
-         description: 'Bad request'
-     }
-   */
+     /* 
+           #swagger.tags = ['Items']
+           #swagger.description = ''
+           #swagger.summary = ''
+           #swagger.parameters['id'] = {
+               description: '',
+               required: true,
+           }
+           #swagger.parameters['data'] = {
+               in: 'body',
+               description: '',
+               required: true,
+           }
+
+           #swagger.parameters['Token'] = {
+                name: 'Token',
+                in: 'header',
+                description: 'JWT token',
+                required: true
+           }
+
+           #swagger.responses[200] = {
+               description: '',
+           }
+           #swagger.responses[400] = {
+               description: '',
+           }
+
+           #swagger.responses[408] = {
+               description: 'Request Timeout',
+           }
+    */
+
     try {
         const itemId = req.params.id;
         const data = req.body;
@@ -136,13 +173,24 @@ exports.deleteItem = async (req, res) => {
              required: true,
          }
 
+         #swagger.parameters['Token'] = {
+             name: 'Token',
+             in: 'header',
+             description: 'JWT token',
+             required: true
+        }
+
          #swagger.responses[200] = {
-             description: '',
+             description: 'Item successfully deleted',
          }
          #swagger.responses[400] = {
              description: '',
          }
-       */
+
+         #swagger.responses[408] = {
+             description: 'Request Timeout',
+         }
+    */
 
     try {
         const itemId = req.params.id;

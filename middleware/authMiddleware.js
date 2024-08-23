@@ -1,21 +1,31 @@
 require('dotenv').config();
+
 const jwt = require('jsonwebtoken');
+const secret = process.env.JWT_SECRET; 
 
-const auth = (req, res, next) => {
-  const token = req.headers['token'];
+module.exports = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  console.log('Authorization Header:', authHeader);
 
-  if (!token) {
-    return res.status(408).json({ message: 'No se encuentra el token' });
+  if (!authHeader) {
+    return res.status(408).send('Request Timeout. No token provided.');
   }
 
-  jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
-    if (err) {
-      return res.status(408).json({ message: 'Fallo al autenticar el token' });
-    }
 
-    req.user = decoded;
+  const token = authHeader;
+  console.log('Extracted Token:', token); 
+
+  if (!token) {
+    return res.status(408).send('Request Timeout. Invalid token format.');
+  }
+
+  try {
+    const decodedToken = jwt.verify(token, secret);
+    console.log('Decoded Token:', decodedToken);
+    req.user = decodedToken;
     next();
-  });
+  } catch (error) {
+    console.error('Token verification error:', error);
+    res.status(408).send('Request Timeout. Invalid token.');
+  }
 };
-
-module.exports = auth;
