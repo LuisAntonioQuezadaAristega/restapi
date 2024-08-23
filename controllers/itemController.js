@@ -1,5 +1,6 @@
 const admin = require('firebase-admin');
 const db = admin.firestore();
+const jwt = require('jsonwebtoken');
 
 exports.createItem = async (req, res) => {
      /* 
@@ -12,9 +13,7 @@ exports.createItem = async (req, res) => {
            required: true,
        }
 
-       #swagger.parameters['Token'] = {
-            name: 'Token',
-            in: 'header',
+       #swagger.parameters['token'] = {
             description: 'JWT token',
             required: true
        }
@@ -32,6 +31,14 @@ exports.createItem = async (req, res) => {
     */
   try {
     const data = req.body;
+
+    const token = req.params.token;
+    jwt.verify(token, 'secret', function(err, decoded) {
+        if (err) {
+            res.status(408).send(err);
+        }
+    });
+
     const itemRef = await db.collection('items').add(data);
     res.status(201).send(`Created a new item: ${itemRef.id}`);
   } catch (error) {
@@ -44,9 +51,7 @@ exports.getAllItems = async (req, res) => {
      #swagger.tags = ['Items']
      #swagger.description = 'Get all items entries'
      #swagger.summary = 'Get all items entries'
-     #swagger.parameters['Token'] = {
-         name: 'Token',
-         in: 'header',
+     #swagger.parameters['token'] = {
          description: 'JWT token',
          required: true
       }
@@ -63,6 +68,14 @@ exports.getAllItems = async (req, res) => {
     */
   try {
     const itemsSnapshot = await db.collection('items').get();
+
+    const token = req.params.token;
+    jwt.verify(token, 'secret', function(err, decoded) {
+        if (err) {
+            res.status(408).send(err);
+        }
+    });
+
     const items = [];
     itemsSnapshot.forEach((doc) => items.push({ id: doc.id, ...doc.data() }));
     res.status(200).json(items);
@@ -82,9 +95,7 @@ exports.getItem = async (req, res) => {
          required: true,
      }
          
-     #swagger.parameters['Token'] = {
-         name: 'Token',
-         in: 'header',
+     #swagger.parameters['token'] = {
          description: 'JWT token',
          required: true
      }
@@ -104,6 +115,13 @@ exports.getItem = async (req, res) => {
      }
    */
     try {
+        const token = req.params.token;
+        jwt.verify(token, 'secret', function(err, decoded) {
+            if (err) {
+                res.status(408).send(err);
+            }
+        });
+
         const itemId = req.params.id;
         const itemDoc = await db.collection('items').doc(itemId).get();
         if (!itemDoc.exists) {
@@ -133,9 +151,7 @@ exports.updateItem = async (req, res) => {
                required: true,
            }
 
-           #swagger.parameters['Token'] = {
-                name: 'Token',
-                in: 'header',
+           #swagger.parameters['token'] = {
                 description: 'JWT token',
                 required: true
            }
@@ -153,6 +169,13 @@ exports.updateItem = async (req, res) => {
     */
 
     try {
+        const token = req.params.token;
+        jwt.verify(token, 'secret', function(err, decoded) {
+            if (err) {
+                res.status(408).send(err);
+            }
+        });
+
         const itemId = req.params.id;
         const data = req.body;
         const itemRef = db.collection('items').doc(itemId);
@@ -173,9 +196,7 @@ exports.deleteItem = async (req, res) => {
              required: true,
          }
 
-         #swagger.parameters['Token'] = {
-             name: 'Token',
-             in: 'header',
+         #swagger.parameters['token'] = {
              description: 'JWT token',
              required: true
         }
@@ -193,6 +214,13 @@ exports.deleteItem = async (req, res) => {
     */
 
     try {
+        const token = req.params.token;
+        jwt.verify(token, 'secret', function(err, decoded) {
+            if (err) {
+                res.status(408).send(err);
+            }
+        });
+        
         const itemId = req.params.id;
         await db.collection('items').doc(itemId).delete();
         res.status(200).send('Item deleted');

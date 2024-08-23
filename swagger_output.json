@@ -11,7 +11,7 @@
     "https"
   ],
   "paths": {
-    "/items": {
+    "/items/{token}": {
       "post": {
         "tags": [
           "Items"
@@ -19,6 +19,13 @@
         "summary": "Create an item",
         "description": "Create an item",
         "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "JWT token"
+          },
           {
             "name": "data",
             "in": "body",
@@ -28,13 +35,6 @@
               "type": "object",
               "properties": {}
             }
-          },
-          {
-            "name": "Token",
-            "in": "header",
-            "description": "JWT token",
-            "required": true,
-            "type": "string"
           }
         ],
         "responses": {
@@ -57,11 +57,11 @@
         "description": "Get all items entries",
         "parameters": [
           {
-            "name": "Token",
-            "in": "header",
-            "description": "JWT token",
+            "name": "token",
+            "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "JWT token"
           }
         ],
         "responses": {
@@ -77,7 +77,7 @@
         }
       }
     },
-    "/items/{id}": {
+    "/items/{id}/{token}": {
       "get": {
         "tags": [
           "Items"
@@ -93,11 +93,11 @@
             "description": "Item id"
           },
           {
-            "name": "Token",
-            "in": "header",
-            "description": "JWT token",
+            "name": "token",
+            "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "JWT token"
           }
         ],
         "responses": {
@@ -119,63 +119,40 @@
         "tags": [
           "Items"
         ],
-        "summary": "Update an item",
-        "description": "Update an item",
+        "summary": "",
+        "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "Item ID"
+            "description": ""
+          },
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "JWT token"
           },
           {
             "name": "data",
             "in": "body",
-            "description": "Data to update the item",
+            "description": "",
             "required": true,
             "schema": {
               "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "object"
-                },
-                "properties": {
-                  "type": "object",
-                  "properties": {
-                    "description": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "example": {
-                          "type": "string",
-                          "example": "New item description"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
+              "properties": {}
             }
-          },
-          {
-            "name": "Token",
-            "in": "header",
-            "description": "JWT token",
-            "required": true,
-            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Item updated"
+            "description": "OK"
           },
           "400": {
-            "description": "Bad request"
+            "description": "Bad Request"
           },
           "408": {
             "description": "Request Timeout"
@@ -197,21 +174,21 @@
             "description": ""
           },
           {
-            "name": "Token",
-            "in": "header",
-            "description": "JWT token",
+            "name": "token",
+            "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "JWT token"
           }
-
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Item successfully deleted"
           },
           "400": {
             "description": "Bad Request"
-          },"408": {
+          },
+          "408": {
             "description": "Request Timeout"
           }
         }
