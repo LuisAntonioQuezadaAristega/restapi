@@ -12,7 +12,7 @@ const swaggerUi = require('swagger-ui-express')
 
  /* Referencia al archivo con la descripción */
 const swaggerFile = require('./swagger_output.json');
-const auth = require('./middleware/authMiddleware.js');
+//const auth = require('./middleware/authMiddleware.js');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 5000;
 app.use('/documentation', swaggerUi.serve, swaggerUi.setup(swaggerFile))
-app.use('/api', auth, require('./routes/api'));
+app.use('/api', require('./routes/api'));
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
